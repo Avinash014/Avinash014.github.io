@@ -5,7 +5,7 @@ var countCorrect = 0;
 var countIncorrect = 0;
 var markCorrect = 4;
 var markIncorrect = 1;
-var allotedTime = "00:01:30";
+var allotedTime = "00:05:00";
 xhttp.onreadystatechange=function(){
     if(this.readyState==4 && this.status==200){
         response = JSON.parse(this.responseText);
