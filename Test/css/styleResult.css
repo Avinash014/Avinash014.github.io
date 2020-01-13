@@ -24,7 +24,10 @@ body{
     padding:1rem;
     background-color: rgb(112, 187, 112);
 }
-@media only (
+@media only (max-width : 600px)
+    #center{
+        width: 80%;
+}
 table, th, td {
     padding: 1rem;
     border: 1px solid black;
