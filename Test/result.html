@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Result </title>
+    <link rel="stylesheet" type="text/css" href="./css/styleResult.css">
+    <script src = "./js/validator.js"></script>
+</head>
+<body>
+    <div id="center">
+        <h1> Result</h1>
+        <p id ="result"></p>
+    </div>
+    <script>
+         async function fun(){
+            // var user =  await getCookie("stetuser");
+            var objString =  await getCookie("userMarks");
+            console.log(objString);
+            var markobj = JSON.parse(objString);
+            document.getElementById("result").innerHTML=`<table style = "width:100%; border:1px solid black;">
+                                                        <tr><td>correct Attempted </td><td>${markobj.numCorrect} </td></tr>
+                                                        <tr><td>wrong Attempted</td><td> ${markobj.numIncorrect} </td></tr>
+                                                        <tr><td>Final marks : </td><td><b> ${markobj.marks}<b></td></tr>
+                                                            </table>`
+            // console.log("markobj="+obj.numCorrect);
+            document.cookie = "stetuser=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+     
+        }
+        fun();
+    // alert(` correct Answers : ${countCorrect}\n incorrect Answers : ${countIncorrect}\n Total Marks :${marks}`);
+    // console.log(countCorrect + " " + countIncorrect);
+       </script>
+</body>
+</html>
