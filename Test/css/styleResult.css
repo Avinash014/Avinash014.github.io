@@ -24,6 +24,7 @@ body{
     padding:1rem;
     background-color: rgb(112, 187, 112);
 }
+@media only (
 table, th, td {
     padding: 1rem;
     border: 1px solid black;
