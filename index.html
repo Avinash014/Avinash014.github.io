@@ -4,9 +4,74 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Test</title>
+    <style>
+      * {
+        position: relative;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        height: 100vh;
+        width: 100vw;
+      }
+      body {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        /* align-items: center; */
+        /* justify-content: center; */
+      }
+      main {
+        height: 100%;
+        height: -webkit-calc(100% - 60px);
+        height: -moz-calc(100% - 60px);
+        height: calc(100% - 60px);
+        background-color: lightblue;
+      }
+      header {
+        height: 60px;
+        background-color: lightgray;
+      }
+      footer {
+        height: 75px;
+        background-color: black;
+      }
+      #showObj {
+        background-color: white;
+        font-size: 25px;
+        width: 100px;
+        height: 100px;
+        border: 2px black solid;
+      }
+      #container {
+        height: 80%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+    </style>
   </head>
   <body>
-    new page
+    <header></header>
+    <main>
+      <div>press L for next picture</div>
+      <div id="container">
+        <div id="showObj">here</div>
+      </div>
+    </main>
+    <footer></footer>
+    <script>
+      const randfunc = () => {
+        return Math.floor(Math.random() * 100 + 1);
+      };
+      document.addEventListener("keypress", function (event) {
+        const ch = String.fromCharCode(event.charCode || event.keyCode);
+        num = randfunc();
+        if (ch === "l") document.getElementById("showObj").innerHTML = num;
+      });
+    </script>
   </body>
 </html>
