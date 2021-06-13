@@ -52,26 +52,103 @@
         align-items: center;
         justify-content: center;
       }
+      #time {
+        width: 200px;
+        height: 50px;
+        background-color: white;
+      }
     </style>
   </head>
   <body>
-    <header></header>
+    <header>
+      <button id="startBtn">Start</button>
+    </header>
     <main>
       <div>press L for next picture</div>
+      <div id="time">time remaining : 60</div>
       <div id="container">
         <div id="showObj">here</div>
       </div>
     </main>
     <footer></footer>
     <script>
-      const randfunc = () => {
-        return Math.floor(Math.random() * 100 + 1);
+      var correct = 0;
+      var inCorrect = 0;
+      var newQuestion = true;
+      var whichImage = 0;
+      // Set up the image files to be used.
+      var theImages = new Array(); // do not change this
+      // To add more image files, continue with the
+      // pattern below, adding to the array.
+
+      theImages[0] = "images1.jpeg";
+      theImages[1] = "images2.jpeg";
+      theImages[2] = "images3.jpeg";
+      theImages[3] = "images4.jpeg";
+      theImages[4] = "images5.jpeg";
+      const len = theImages.length;
+      var correctColor = ["g", "y", "g", "y", "r"];
+
+      showDashboard = () => {
+        alert("correct : " + correct + "\n" + "Incorrect : " + inCorrect);
       };
+      startFunc = () => {
+        var initial = new Date();
+        var initialSec = initial.getSeconds();
+        const timer = setInterval(() => {
+          var curr = new Date();
+          var currSec = curr.getSeconds();
+          var diff = currSec - initialSec;
+          diff = diff > 0 ? diff : 60 + diff;
+          var timeRemaining = 60 - diff;
+          document.getElementById(
+            "time"
+          ).innerHTML = `time remaining : ${timeRemaining}`;
+          if (timeRemaining <= 0) {
+            clearInterval(timer);
+            showDashboard();
+          }
+        }, 1000);
+      };
+
+      document.getElementById("startBtn").onclick = startFunc;
+
       document.addEventListener("keypress", function (event) {
         const ch = String.fromCharCode(event.charCode || event.keyCode);
-        num = randfunc();
-        if (ch === "l") document.getElementById("showObj").innerHTML = num;
+        if (ch === "l") {
+          newQuestion = true;
+          whichImage = Math.round(Math.random() * (len - 1));
+          imageInsertHandler(whichImage);
+        } else {
+          if (newQuestion === true) {
+            newQuestion = false;
+            if (ch === correctColor[whichImage]) {
+              console.log("correct");
+              correct++;
+            } else {
+              inCorrect++;
+              console.log("Incorrect");
+            }
+          }
+        }
       });
+      function showImage(whichImage) {
+        document.getElementById("showObj").innerHTML =
+          '<img src="../LightPictures/' +
+          theImages[whichImage] +
+          '" alt = "hello">';
+      }
+      const imageInsertHandler = (whichImage) => {
+        // do not edit anything below this line
+        // var j = 0;
+        // var p = theImages.length;
+        // var preBuffer = new Array();
+        // for (i = 0; i < p; i++) {
+        //   preBuffer[i] = new Image();
+        //   preBuffer[i].src = theImages[i];
+        // }
+        showImage(whichImage);
+      };
     </script>
   </body>
 </html>
