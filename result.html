@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test</title>
+    <style>
+      * {
+        position: relative;
+        margin: 0;
+        padding: 0;
+        box-sizing: content-box;
+        list-style-position: inside;
+      }
+      html {
+        height: 100vh;
+        width: 100vw;
+      }
+      body {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        /* align-items: center; */
+        /* justify-content: center; */
+      }
+      main {
+        height: 100%;
+        height: -webkit-calc(100% - 60px);
+        height: -moz-calc(100% - 60px);
+        height: calc(100% - 60px);
+        background-color: white;
+      }
+      header {
+        height: 60px;
+        background-color: lightgray;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      footer {
+        height: 75px;
+        background-color: grey;
+        color: white;
+        display: flex;
+        font-size: 25px;
+        justify-content: center;
+        align-items: center;
+      }
+      img {
+        object-fit: contain;
+        width: 100%;
+        height: 100%;
+      }
+
+      #container {
+        height: 100%;
+        margin-top: 10%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        /* justify-content: center; */
+      }
+      #result {
+        text-align: left;
+        border: 1px solid black;
+        margin: 10px;
+        padding: 10px;
+        font-size: 25px;
+      }
+      #logo {
+        height: 60px;
+        width: 60px;
+      }
+      #showObj {
+        background-color: white;
+        font-size: 25px;
+        width: 300px;
+        height: 300px;
+        color: red;
+        /* border: 2px black solid; */
+      }
+      #retryBtn {
+        background-color: darkred;
+        width: 150px;
+        height: 80%;
+        font-size: 25px;
+        margin: 5px;
+      }
+      #time {
+        font-size: 25px;
+        margin: 10px;
+        padding: 10px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 200px;
+        height: 50px;
+        background-color: white;
+      }
+      .Promo {
+        border: 2px black solid;
+        font-size: 22px;
+        color: red;
+        text-align: left;
+        margin:10px;
+        padding:10px;
+      }
+      .Promo > div {
+        line-height: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div id="logo"><img src="./LogoColorTextBelow.jpeg" alt="logo" /></div>
+      <h1>Result for Given Machine Test</h1>
+      <button id="retryBtn">Re Attempt</button>
+    </header>
+    <main>
+      <div id="container">
+        <div id="result">
+          <ul>
+            <li id="correct">Correct Answer(s) :</li>
+            <li id="inCorrect">Incorrect Answer(s) :</li>
+          </ul>
+        </div>
+
+        <div class="Promo">
+          <div>
+            &#8594 For DMRC/LMRC/NMRC Psycho Test complete preparation Download
+            our APP
+            <a
+              target="_blank"
+              href="https://play.google.com/store/apps/details?id=co.jarvis.uedu"
+              >Unlimited Education - Click Here</a
+            >
+          </div>
+          <div>
+            &#8594 For Free Psycho Test Preparation, Updates and Information
+            Subscribe Our YouTube Channel
+            <a target="_blank" href="https://www.youtube.com/unlimitededucation"
+              >YouTube Channel - Click Here</a
+            >
+          </div>
+        </div>
+        <!-- <div class="Promo"> -->
+
+        <!-- </div> -->
+      </div>
+    </main>
+    <footer>&copy Unlimited Education</footer>
+    <script>
+      document.getElementById("retryBtn").onclick = function () {
+        location.href = "./index.html";
+      };
+      document.getElementById("result").onclick = function () {
+        location.href = "./index.html";
+      };
+      let correct = sessionStorage.getItem("correct");
+      let inCorrect = sessionStorage.getItem("inCorrect");
+      document.getElementById(
+        "correct"
+      ).innerText = `Correct Answer(s) :${correct}`;
+      document.getElementById(
+        "inCorrect"
+      ).innerText = `Incorrect Answer(s) :${inCorrect}`;
+    </script>
+  </body>
+</html>

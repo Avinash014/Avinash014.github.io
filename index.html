@@ -118,7 +118,7 @@
           <li>Press Y for Answering Yellow</li>
         </ul>
       </div>
-      <div id="time">time remaining : 60</div>
+      <div id="time">Time remaining : <span style="color: red">60</span></div>
       <div id="container">
         <div id="showObj">Click the Start Button to start the Test</div>
       </div>
@@ -170,24 +170,35 @@
       ];
 
       showDashboard = () => {
-        alert("correct : " + correct + "\n" + "Incorrect : " + inCorrect);
+        // alert("correct : " + correct + "\n" + "Incorrect : " + inCorrect);
+        myStorage = window.sessionStorage;
+        sessionStorage.setItem("correct", correct);
+        sessionStorage.setItem("inCorrect", inCorrect);
+        location.href = "./Result.html";
       };
+      // goToResultPage = () => {
+      //   location.href = "./Result.html";
+      // };
       startFunc = () => {
         started = true;
         var initial = new Date();
         var initialSec = initial.getSeconds();
+        const timeElement = document.getElementById("time").childNodes[1];
         var timer = setInterval(() => {
           var curr = new Date();
           var currSec = curr.getSeconds();
           var diff = currSec - initialSec;
           diff = diff > 0 ? diff : 60 + diff;
           var timeRemaining = 60 - diff;
-          document.getElementById(
-            "time"
-          ).innerHTML = `time remaining : ${timeRemaining}`;
+          console.log(timeElement);
+          timeElement.innerText = timeRemaining;
+          // document.getElementById(
+
+          // ).innerHTML = `Time remaining : <span color="red">${timeRemaining}`;
           if (timeRemaining <= 0) {
             started = false;
             clearInterval(timer);
+            timeElement.innerText = 60;
             showDashboard();
           }
         }, 1000);
@@ -197,7 +208,9 @@
         stopFunc = () => {
           clearInterval(timer);
           started = false;
+          timeElement.innerText = 60;
           showDashboard();
+          // goToResultPage();
           document.getElementById("startBtn").onclick = startFunc;
           document.getElementById("startBtn").innerText = "Start";
           document.getElementById("startBtn").style.backgroundColor = "lime";
