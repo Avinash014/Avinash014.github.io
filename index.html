@@ -174,11 +174,8 @@
         myStorage = window.sessionStorage;
         sessionStorage.setItem("correct", correct);
         sessionStorage.setItem("inCorrect", inCorrect);
-        location.href = "./Result.html";
+        location.href = "./result.html";
       };
-      // goToResultPage = () => {
-      //   location.href = "./Result.html";
-      // };
       startFunc = () => {
         started = true;
         var initial = new Date();
@@ -210,7 +207,6 @@
           started = false;
           timeElement.innerText = 60;
           showDashboard();
-          // goToResultPage();
           document.getElementById("startBtn").onclick = startFunc;
           document.getElementById("startBtn").innerText = "Start";
           document.getElementById("startBtn").style.backgroundColor = "lime";
