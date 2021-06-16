@@ -301,6 +301,7 @@
       const play = (ch) => {
         if (started === false) return;
         // const ch = String.fromCharCode(event.charCode || event.keyCode);
+        ch = ch.toLowerCase();
         if (ch === "l") {
           newQuestion = true;
           whichImage = Math.round(Math.random() * (len - 1));
