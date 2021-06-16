@@ -10,20 +10,21 @@
         position: relative;
         margin: 0;
         padding: 0;
-        box-sizing: content-box;
+        box-sizing: border-box;
         list-style-position: inside;
       }
+
       html {
         height: 100vh;
         width: 100vw;
+        overflow: auto;
+        font-size: 16px;
       }
       body {
         height: 100%;
         display: flex;
         flex-direction: column;
         text-align: center;
-        /* align-items: center; */
-        /* justify-content: center; */
       }
       main {
         height: 100%;
@@ -33,7 +34,8 @@
         background-color: white;
       }
       header {
-        height: 60px;
+        height: 20%;
+        max-height: 60px;
         background-color: lightgray;
         display: flex;
         justify-content: space-between;
@@ -44,7 +46,7 @@
         background-color: grey;
         color: white;
         display: flex;
-        font-size: 25px;
+        font-size: 1.5rem;
         justify-content: center;
         align-items: center;
       }
@@ -55,72 +57,119 @@
       }
 
       #container {
-        height: 80%;
-        margin-top: 10%;
+        max-height: 50%;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
       }
+      #info {
+        height: 100px;
+        max-height: 25%;
+      }
       #instruction {
         position: absolute;
+        max-width: 60%;
         text-align: left;
         border: 1px solid black;
-        margin: 10px;
         padding: 10px;
         top: 0;
         left: 0;
       }
       #logo {
-        height: 60px;
-        width: 60px;
+        min-width: 40px;
+        min-height: 40px;
+        max-height: 60px;
+        max-width: 60px;
       }
       #showObj {
         background-color: white;
-        font-size: 25px;
+        font-size: 1.5rem;
         width: 300px;
         height: 300px;
         color: red;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
         /* border: 2px black solid; */
       }
       #startBtn {
         background-color: lime;
+        min-width: 120px;
         width: 150px;
         height: 80%;
-        font-size: 25px;
+        font-size: 1.5rem;
         margin: 5px;
       }
+      #testName {
+        padding: 2px;
+        width: 70%;
+        font-size: 1.5rem;
+      }
       #time {
-        font-size: 25px;
-        margin: 10px;
+        font-size: 1.5rem;
         padding: 10px;
         position: absolute;
         top: 0;
         right: 0;
         width: 200px;
         height: 50px;
+        max-width: 40%;
         background-color: white;
+      }
+      #keyBtnContainer {
+        height: 25%;
+        /* display: flex; */
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .keyBtn {
+        width: 100px;
+        height: 50px;
+      }
+      @media only screen and (max-width: 600px) {
+        html {
+          font-size: 10px;
+        }
       }
     </style>
   </head>
   <body>
     <header>
       <div id="logo"><img src="./LogoColorTextBelow.jpeg" alt="logo" /></div>
-      <h1>DMRC/LMRC/NMRC Machine Test</h1>
+      <div id="testName">DMRC/LMRC/NMRC Machine Test</div>
       <button id="startBtn">Start</button>
     </header>
     <main>
-      <div id="instruction">
-        <ul>
-          <li>Press L for next Picture</li>
-          <li>Press G for Answering Green</li>
-          <li>Press R for Answering Red</li>
-          <li>Press Y for Answering Yellow</li>
-        </ul>
+      <div id="info">
+        <div id="instruction">
+          <ul>
+            <li>Press L for next Picture</li>
+            <li>Press G for Answering Green</li>
+            <li>Press R for Answering Red</li>
+            <li>Press Y for Answering Yellow</li>
+          </ul>
+        </div>
+        <div id="time">Time remaining : <span style="color: red">60</span></div>
       </div>
-      <div id="time">Time remaining : <span style="color: red">60</span></div>
+
       <div id="container">
         <div id="showObj">Click the Start Button to start the Test</div>
+      </div>
+      <div id="keyBtnContainer">
+        <table>
+          <tr>
+            <td><button id="keyR" class="keyBtn">R</button></td>
+            <td><button id="keyY" class="keyBtn">Y</button></td>
+          </tr>
+          <tr>
+            <td><button id="keyG" class="keyBtn">G</button></td>
+            <td><button id="keyL" class="keyBtn">L</button></td>
+          </tr>
+        </table>
       </div>
     </main>
     <footer>&copy Unlimited Education</footer>
@@ -168,7 +217,7 @@
         "g",
         "y",
       ];
-
+      screenWidth = screen.width;
       showDashboard = () => {
         // alert("correct : " + correct + "\n" + "Incorrect : " + inCorrect);
         myStorage = window.sessionStorage;
@@ -178,6 +227,8 @@
       };
       startFunc = () => {
         started = true;
+        if (screenWidth <= 600)
+          document.getElementById("keyBtnContainer").style.display = "flex";
         var initial = new Date();
         var initialSec = initial.getSeconds();
         const timeElement = document.getElementById("time").childNodes[1];
@@ -187,7 +238,6 @@
           var diff = currSec - initialSec;
           diff = diff > 0 ? diff : 60 + diff;
           var timeRemaining = 60 - diff;
-          console.log(timeElement);
           timeElement.innerText = timeRemaining;
           // document.getElementById(
 
@@ -207,19 +257,33 @@
           started = false;
           timeElement.innerText = 60;
           showDashboard();
-          document.getElementById("startBtn").onclick = startFunc;
+          // document.getElementById("startBtn").onclick = startFunc;
           document.getElementById("startBtn").innerText = "Start";
           document.getElementById("startBtn").style.backgroundColor = "lime";
+          document.getElementById("keyBtnContainer").style.display = "none";
         };
         document.getElementById("startBtn").onclick = stopFunc;
         document.getElementById("startBtn").innerText = "Stop";
         document.getElementById("startBtn").style.backgroundColor = "red";
       };
 
-      document.getElementById("startBtn").onclick = startFunc;
-      const play = (event) => {
+      document.getElementById("startBtn").onclick = function () {
+        var startingIn = 3;
+        const getSet = setInterval(() => {
+          document.getElementById(
+            "showObj"
+          ).innerText = `Starting in : ${startingIn}`;
+
+          if (startingIn < 0) {
+            startFunc();
+            clearInterval(getSet);
+          }
+          startingIn--;
+        }, 1000);
+      };
+      const play = (ch) => {
         if (started === false) return;
-        const ch = String.fromCharCode(event.charCode || event.keyCode);
+        // const ch = String.fromCharCode(event.charCode || event.keyCode);
         if (ch === "l") {
           newQuestion = true;
           whichImage = Math.round(Math.random() * (len - 1));
@@ -238,7 +302,20 @@
         }
       };
       document.addEventListener("keypress", function (event) {
-        play(event);
+        const ch = String.fromCharCode(event.charCode || event.keyCode);
+        play(ch);
+      });
+      document.getElementById("keyR").addEventListener("click", function () {
+        play("r");
+      });
+      document.getElementById("keyG").addEventListener("click", function () {
+        play("g");
+      });
+      document.getElementById("keyL").addEventListener("click", function () {
+        play("l");
+      });
+      document.getElementById("keyY").addEventListener("click", function () {
+        play("y");
       });
       function showImage(whichImage) {
         document.getElementById("showObj").innerHTML =
