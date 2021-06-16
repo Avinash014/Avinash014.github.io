@@ -273,12 +273,11 @@
           document.getElementById(
             "showObj"
           ).innerText = `Starting in : ${startingIn}`;
-
+          startingIn--;
           if (startingIn < 0) {
             startFunc();
             clearInterval(getSet);
           }
-          startingIn--;
         }, 1000);
       };
       const play = (ch) => {
