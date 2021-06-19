@@ -303,9 +303,11 @@
         // const ch = String.fromCharCode(event.charCode || event.keyCode);
         ch = ch.toLowerCase();
         if (ch === "l") {
-          newQuestion = true;
-          whichImage = Math.round(Math.random() * (len - 1));
-          imageInsertHandler(whichImage);
+          if (newQuestion === false) {
+            newQuestion = true;
+            whichImage = Math.round(Math.random() * (len - 1));
+            imageInsertHandler(whichImage);
+          }
         } else {
           if (newQuestion === true) {
             newQuestion = false;
