@@ -145,6 +145,10 @@
         justify-content: center;
       }
       .keyBtn {
+        width: 100%;
+        height: 100%;
+      }
+      td {
         width: 100px;
         height: 50px;
       }
@@ -169,6 +173,7 @@
             <li>Press G for Answering Green</li>
             <li>Press R for Answering Red</li>
             <li>Press Y for Answering Yellow</li>
+            <li>Press B for Answering Blue</li>
           </ul>
         </div>
         <div id="time">Time remaining : <span style="color: red">60</span></div>
@@ -185,7 +190,10 @@
           </tr>
           <tr>
             <td><button id="keyG" class="keyBtn">G</button></td>
-            <td><button id="keyL" class="keyBtn">L</button></td>
+            <td rowspan="2"><button id="keyL" class="keyBtn">L</button></td>
+          </tr>
+          <tr>
+            <td><button id="keyB" class="keyBtn">B</button></td>
           </tr>
         </table>
       </div>
@@ -217,6 +225,11 @@
       theImages[12] = "13.jpg";
       theImages[13] = "14.jpg";
       theImages[14] = "15.jpg";
+      theImages[15] = "16.png";
+      theImages[16] = "17.jfif";
+      theImages[17] = "18.jfif";
+      theImages[18] = "19.jfif";
+      theImages[19] = "20.png";
       const len = theImages.length;
       var correctColor = [
         "g",
@@ -234,6 +247,11 @@
         "y",
         "g",
         "y",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
       ];
       screenWidth = screen.width;
       showDashboard = () => {
