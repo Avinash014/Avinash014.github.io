@@ -13,7 +13,7 @@
 
     "icons": [
       {
-        "src": "/medal.png",
+        "src": "./medal.png",
         "type": "image/png",
         "sizes": "any"
       }
