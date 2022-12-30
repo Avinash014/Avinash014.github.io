@@ -2,7 +2,7 @@
     "name": "ThinkFast",
     "short_name": "ThinkFast",
     "description": "A Game to speed your math calculation",
-    "start_url": "/index.html",
+    "start_url": "./index.html",
     "scope": ".",
     "background_color": "#EEE",
     "theme_color": "#4A148C",
