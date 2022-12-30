@@ -255,7 +255,7 @@
         <table>
           <tr>
             <td><span id="num1" class="keyBtn"></span></td>
-            <td><span id="num1" class="keyBtn">+</span></td>
+            <td><span id="operation" class="keyBtn">+</span></td>
             <td><span id="num2" class="keyBtn"></span></td>
           </tr>
           <tr>
@@ -284,24 +284,72 @@
       var inCorrect = 0;
       var newQuestion = true;
       var whichImage = 0;
+      var gameLevel = 1;
+      var minNumber = 1;
+      var maxNumber = 9;
+      var operation = "+";
       // Set up the image files to be used.
       var theImages = new Array(); // do not change this
+      gameLevel = parseInt(localStorage.getItem("gameLevel")) || 1;
+      document.getElementById("gameLevel").value = gameLevel;
+      console.info(`game Level is ${gameLevel}`);
       init = () => {
-        gameLevel = parseInt(localStorage.getItem("gameLevel")) || 1;
-        console.info(`game Level is ${gameLevel}`);
-        document.getElementById("gameLevel").value = gameLevel;
+        switch (gameLevel) {
+          case 1:
+            maxNumber = 10;
+            operation = "+";
+            break;
+          case 2:
+            maxNumber = 100;
+            operation = "+";
+            break;
+          case 3:
+            maxNumber = 10;
+            operation = "-";
+            break;
+          case 4:
+            maxNumber = 100;
+            operation = "-";
+            break;
+          case 5:
+            maxNumber = 10;
+            operation = "X";
+            break;
+          default:
+            maxNumber = 100;
+            operation = "X";
+        }
       };
-      init();
 
       screenWidth = screen.width;
-      showDashboard = () => {
-        // alert("correct : " + correct + "\n" + "Incorrect : " + inCorrect);
-        localStorage.setItem("correct", correct);
-        localStorage.setItem("inCorrect", inCorrect);
-        localStorage.setItem("total", total);
-        location.href = "./result.html";
+
+      document.getElementById("startBtn").onclick = function () {
+        gameLevel = parseInt(document.getElementById("gameLevel").value);
+        console.info(`game level set is ${gameLevel}`);
+        localStorage.setItem("gameLevel", gameLevel);
+        var startingIn = 1;
+        const getSet = setInterval(() => {
+          document.getElementById(
+            "showObj"
+          ).innerText = `Starting in : ${startingIn}`;
+          startingIn--;
+          if (startingIn < 0) {
+            startFunc();
+            clearInterval(getSet);
+          }
+        }, 1000);
       };
+      document.getElementById("submitBtn").onclick = function () {
+        handleSubmission();
+      };
+      document.addEventListener("keypress", function (event) {
+        const charCode = event.charCode || event.keyCode || event.which;
+        if (charCode == 13) {
+          handleSubmission();
+        }
+      });
       startFunc = () => {
+        init();
         document.getElementById("keyBtnContainer").style.display = "flex";
         document.getElementById("container").style.display = "none";
         started = true;
@@ -343,26 +391,7 @@
         document.getElementById("startBtn").style.backgroundColor = "red";
       };
 
-      document.getElementById("startBtn").onclick = function () {
-        gameLevel = parseInt(document.getElementById("gameLevel").value);
-        console.info(`game level set is ${gameLevel}`);
-        localStorage.setItem("gameLevel", gameLevel);
-        var startingIn = 1;
-        const getSet = setInterval(() => {
-          document.getElementById(
-            "showObj"
-          ).innerText = `Starting in : ${startingIn}`;
-          startingIn--;
-          if (startingIn < 0) {
-            startFunc();
-            clearInterval(getSet);
-          }
-        }, 1000);
-      };
-      document.getElementById("submitBtn").onclick = function () {
-        handleSubmission();
-      };
-      function handleCorrectAnswer() {
+      handleCorrectAnswer = () => {
         correct++;
         snackElem = document.getElementById("snack");
         document.getElementById("snackObj").innerHTML = "Correct";
@@ -370,8 +399,8 @@
         setTimeout(function () {
           snackElem.className = "";
         }, 2000);
-      }
-      function handleInCorrectAnswer() {
+      };
+      handleInCorrectAnswer = () => {
         inCorrect++;
         snackElem = document.getElementById("snack");
         document.getElementById("snackObj").innerHTML = "InCorrect";
@@ -379,46 +408,56 @@
         setTimeout(function () {
           snackElem.className = "";
         }, 2000);
-      }
-      function handleSubmission() {
+      };
+      handleSubmission = () => {
         num1 = parseInt(document.getElementById("num1").innerHTML);
         num2 = parseInt(document.getElementById("num2").innerHTML);
         ans = parseInt(document.getElementById("answer").value);
+        var correctAnswer = 0;
 
-        if (num1 + num2 == ans) {
+        switch (gameLevel) {
+          case 1:
+          case 2:
+            correctAnswer = num1 + num2;
+            break;
+          case 3:
+          case 4:
+            correctAnswer = num1 - num2;
+            break;
+          case 5:
+          default:
+            correctAnswer = num1 * num2;
+        }
+
+        if (correctAnswer == ans) {
           handleCorrectAnswer();
         } else handleInCorrectAnswer();
 
         total++;
-        console.info(num1, num2, ans, num1 + num2);
-        console.info(num1 + num2 == ans);
+        console.info(num1, num2, ans, correctAnswer);
         questionInsertHandler();
-      }
+      };
 
-      // const play = (ch) => {
-      //   if (started === false) return;
-      //   // const ch = String.fromCharCode(event.charCode || event.keyCode);
-      //   console.info(ch)
-      //   ch = ch.toLowerCase();
-      //   console.info(ch);
-      // };
-      document.addEventListener("keypress", function (event) {
-        const charCode = event.charCode || event.keyCode || event.which;
-        if (charCode == 13) {
-          handleSubmission();
+      questionInsertHandler = () => {
+        num1 = Math.floor(Math.random() * maxNumber);
+        num2 = Math.floor(Math.random() * maxNumber);
+        if (operation == "-") {
+          if (num1 < num2) [num1, num2] = [num2, num1];
         }
-        // const ch = String.fromCharCode(charCode);
-        // play(ch);
-      });
-
-      function questionInsertHandler() {
-        num1 = 1 + Math.floor(Math.random() * 10);
-        num2 = 1 + Math.floor(Math.random() * 10);
+        console.info(`operation is ${operation}`);
         document.getElementById("num1").innerHTML = num1;
         document.getElementById("num2").innerHTML = num2;
+        document.getElementById("operation").innerHTML = operation;
         document.getElementById("answer").value = null;
         document.getElementById("answer").focus();
-      }
+      };
+      showDashboard = () => {
+        // alert("correct : " + correct + "\n" + "Incorrect : " + inCorrect);
+        localStorage.setItem("correct", correct);
+        localStorage.setItem("inCorrect", inCorrect);
+        localStorage.setItem("total", total);
+        location.href = "./result.html";
+      };
     </script>
   </body>
 </html>
