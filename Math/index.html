@@ -2,9 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="X-UA-Compatible " content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="manifest" href="./manifest.json">
+    <link rel="manifest" href="./manifest.json" />
     <!-- <script
       data-ad-client="ca-pub-5354363019686630"
       async
@@ -31,6 +31,7 @@
         padding: 0;
         box-sizing: border-box;
         list-style-position: inside;
+        font-size: 1.5rem;
       }
 
       html {
@@ -156,43 +157,50 @@
         height: 50px;
       }
       @keyframes snack {
-  from {opacity: 0;}
-  to {opacity : 1;}
-}
-#snack {
-  position : fixed;
-  visibility: hidden; 
-  min-width: 250px; 
-  /* background-color: #333; Black background color */
-  /* color: #fff; White text color */
-  text-align: center; 
-  border-radius: 2px; 
-  padding: 16px; 
-  z-index: 1; /* Add a z-index if needed */
-  right: 10%; /* Center the snackbar */
-  top:10%;
-}
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      #snack {
+        position: fixed;
+        visibility: hidden;
+        min-width: 250px;
+        /* background-color: #333; Black background color */
+        /* color: #fff; White text color */
+        text-align: center;
+        border-radius: 2px;
+        padding: 16px;
+        z-index: 1; /* Add a z-index if needed */
+        right: 10%; /* Center the snackbar */
+        top: 10%;
+      }
 
-/* Show the snackbar when clicking on a button (class added with JavaScript) */
-#snack.correct {
-  background-color: lightgreen;
-  color:green;
-}
-#snack.incorrect {
-  background-color: lightcoral;
-  color:red;
-}
-#snack.snackAnimate {
-  animation-name: snackAnimation;
-  animation-duration: 2s;
-}
-@keyframes snackAnimation {
-  0%   {visibility: visible;}
-  /* 25%  {background-color: yellow;}
+      /* Show the snackbar when clicking on a button (class added with JavaScript) */
+      #snack.correct {
+        background-color: lightgreen;
+        color: green;
+      }
+      #snack.incorrect {
+        background-color: lightcoral;
+        color: red;
+      }
+      #snack.snackAnimate {
+        animation-name: snackAnimation;
+        animation-duration: 2s;
+      }
+      @keyframes snackAnimation {
+        0% {
+          visibility: visible;
+        }
+        /* 25%  {background-color: yellow;}
   50%  {background-color: blue;} */
-  100% {visibility:hidden}
-}
-
+        100% {
+          visibility: hidden;
+        }
+      }
 
       @media only screen and (max-width: 600px) {
         html {
@@ -201,16 +209,16 @@
       }
     </style>
     <script>
-      if('serviceWorker' in navigator) {
-          navigator.serviceWorker
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker
           .register("./sw.js")
-          .then(function() {
+          .then(function () {
             console.log("Service Worker registered successfully.");
           })
-          .catch(function() {
-            console.log("Service worker registration failed.")
+          .catch(function () {
+            console.log("Service worker registration failed.");
           });
-          }
+      }
     </script>
   </head>
   <body>
@@ -225,6 +233,19 @@
       </div>
 
       <div id="container">
+        <div>
+          <label for="gameLevel">Choose Level:</label>
+          <select name="gameLevel" id="gameLevel">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+          </select>
+        </div>
         <div id="showObj">Click the Start Button to start the Test</div>
       </div>
       <div id="snack">
@@ -234,16 +255,24 @@
         <table>
           <tr>
             <td><span id="num1" class="keyBtn"></span></td>
-            <td><span id="num1" class="keyBtn">+</span></td>
-            <td><span id="num2" class="keyBtn"></button></td>
+            <td><span id="operation" class="keyBtn">+</span></td>
+            <td><span id="num2" class="keyBtn"></span></td>
           </tr>
           <tr>
-            <td colspan="3"><input id="answer" type = "number" placeholder = "answer" class="keyBtn"></input></td>
+            <td colspan="3">
+              <input
+                id="answer"
+                type="number"
+                placeholder="answer"
+                class="keyBtn"
+              />
+            </td>
           </tr>
           <tr>
-            <td colspan="3"><button id="submitBtn" class="keyBtn">Submit</button></td>
+            <td colspan="3">
+              <button id="submitBtn" class="keyBtn">Submit</button>
+            </td>
           </tr>
-          
         </table>
       </div>
     </main>
@@ -255,23 +284,76 @@
       var inCorrect = 0;
       var newQuestion = true;
       var whichImage = 0;
+      var gameLevel = 1;
+      var minNumber = 1;
+      var maxNumber = 9;
+      var operation = "+";
       // Set up the image files to be used.
       var theImages = new Array(); // do not change this
+      gameLevel = parseInt(localStorage.getItem("gameLevel")) || 1;
+      document.getElementById("gameLevel").value = gameLevel;
+      console.info(`game Level is ${gameLevel}`);
+      init = () => {
+        switch (gameLevel) {
+          case 1:
+            maxNumber = 10;
+            operation = "+";
+            break;
+          case 2:
+            maxNumber = 100;
+            operation = "+";
+            break;
+          case 3:
+            maxNumber = 10;
+            operation = "-";
+            break;
+          case 4:
+            maxNumber = 100;
+            operation = "-";
+            break;
+          case 5:
+            maxNumber = 10;
+            operation = "X";
+            break;
+          default:
+            maxNumber = 100;
+            operation = "X";
+        }
+      };
 
       screenWidth = screen.width;
-      showDashboard = () => {
-        // alert("correct : " + correct + "\n" + "Incorrect : " + inCorrect);
-        myStorage = window.sessionStorage;
-        sessionStorage.setItem("correct", correct);
-        sessionStorage.setItem("inCorrect", inCorrect);
-        sessionStorage.setItem("total", total);
-        location.href = "./result.html";
+
+      document.getElementById("startBtn").onclick = function () {
+        gameLevel = parseInt(document.getElementById("gameLevel").value);
+        console.info(`game level set is ${gameLevel}`);
+        localStorage.setItem("gameLevel", gameLevel);
+        var startingIn = 1;
+        const getSet = setInterval(() => {
+          document.getElementById(
+            "showObj"
+          ).innerText = `Starting in : ${startingIn}`;
+          startingIn--;
+          if (startingIn < 0) {
+            startFunc();
+            clearInterval(getSet);
+          }
+        }, 1000);
       };
+      document.getElementById("submitBtn").onclick = function () {
+        handleSubmission();
+      };
+      document.addEventListener("keypress", function (event) {
+        const charCode = event.charCode || event.keyCode || event.which;
+        if (charCode == 13) {
+          handleSubmission();
+        }
+      });
       startFunc = () => {
+        init();
         document.getElementById("keyBtnContainer").style.display = "flex";
         document.getElementById("container").style.display = "none";
         started = true;
-       
+
         var initial = new Date();
         var initialSec = initial.getSeconds();
         const timeElement = document.getElementById("time").childNodes[1];
@@ -292,7 +374,6 @@
         }, 1000);
 
         newQuestion = true;
-        
 
         questionInsertHandler();
         stopFunc = () => {
@@ -303,83 +384,79 @@
           // document.getElementById("startBtn").onclick = startFunc;
           document.getElementById("startBtn").innerText = "Start";
           document.getElementById("startBtn").style.backgroundColor = "lime";
-        //   document.getElementById("keyBtnContainer").style.display = "none";
+          //   document.getElementById("keyBtnContainer").style.display = "none";
         };
         document.getElementById("startBtn").onclick = stopFunc;
         document.getElementById("startBtn").innerText = "Stop";
         document.getElementById("startBtn").style.backgroundColor = "red";
       };
 
-      document.getElementById("startBtn").onclick = function () {
-        var startingIn = 1;
-        const getSet = setInterval(() => {
-          document.getElementById(
-            "showObj"
-          ).innerText = `Starting in : ${startingIn}`;
-          startingIn--;
-          if (startingIn < 0) {
-            startFunc();
-            clearInterval(getSet);
-          }
-        }, 1000);
-      };
-      document.getElementById("submitBtn").onclick = function () {      
-        handleSubmission();            
-      }
-      function handleCorrectAnswer(){
+      handleCorrectAnswer = () => {
         correct++;
-        snackElem=document.getElementById("snack");
-        document.getElementById("snackObj").innerHTML="Correct"
-        snackElem.className="correct snackAnimate";
-        setTimeout(function(){ snackElem.className="" }, 2000);
-      }
-      function handleInCorrectAnswer(){
+        snackElem = document.getElementById("snack");
+        document.getElementById("snackObj").innerHTML = "Correct";
+        snackElem.className = "correct snackAnimate";
+        setTimeout(function () {
+          snackElem.className = "";
+        }, 2000);
+      };
+      handleInCorrectAnswer = () => {
         inCorrect++;
-        snackElem=document.getElementById("snack");
-        document.getElementById("snackObj").innerHTML="InCorrect"
-        snackElem.className="incorrect snackAnimate";
-        setTimeout(function(){ snackElem.className="" }, 2000);
-      }
-      function handleSubmission(){
-        num1=parseInt(document.getElementById("num1").innerHTML);
-        num2=parseInt(document.getElementById("num2").innerHTML);
-        ans=parseInt(document.getElementById("answer").value);
+        snackElem = document.getElementById("snack");
+        document.getElementById("snackObj").innerHTML = "InCorrect";
+        snackElem.className = "incorrect snackAnimate";
+        setTimeout(function () {
+          snackElem.className = "";
+        }, 2000);
+      };
+      handleSubmission = () => {
+        num1 = parseInt(document.getElementById("num1").innerHTML);
+        num2 = parseInt(document.getElementById("num2").innerHTML);
+        ans = parseInt(document.getElementById("answer").value);
+        var correctAnswer = 0;
 
-        if(num1+num2==ans){        
-          handleCorrectAnswer();
+        switch (gameLevel) {
+          case 1:
+          case 2:
+            correctAnswer = num1 + num2;
+            break;
+          case 3:
+          case 4:
+            correctAnswer = num1 - num2;
+            break;
+          case 5:
+          default:
+            correctAnswer = num1 * num2;
         }
-        else handleInCorrectAnswer();
+
+        if (correctAnswer == ans) {
+          handleCorrectAnswer();
+        } else handleInCorrectAnswer();
 
         total++;
-        console.info(num1,num2,ans,num1+num2)
-        console.info(num1+num2==ans);
+        console.info(num1, num2, ans, correctAnswer);
         questionInsertHandler();
-      }
-      
-      // const play = (ch) => {
-      //   if (started === false) return;
-      //   // const ch = String.fromCharCode(event.charCode || event.keyCode);
-      //   console.info(ch)
-      //   ch = ch.toLowerCase();
-      //   console.info(ch);
-      // };
-      document.addEventListener("keypress", function (event) {
-        const charCode = event.charCode || event.keyCode || event.which;
-        if(charCode == 13){
-          handleSubmission();
+      };
+
+      questionInsertHandler = () => {
+        num1 = Math.floor(Math.random() * maxNumber);
+        num2 = Math.floor(Math.random() * maxNumber);
+        if (operation == "-") {
+          if (num1 < num2) [num1, num2] = [num2, num1];
         }
-        // const ch = String.fromCharCode(charCode);
-        // play(ch);
-      });
-     
-      
-      function questionInsertHandler(){
-        num1 = 1 + Math.floor(Math.random() * 10);
-        num2 = 1 + Math.floor(Math.random() * 10);
+        console.info(`operation is ${operation}`);
         document.getElementById("num1").innerHTML = num1;
         document.getElementById("num2").innerHTML = num2;
-        document.getElementById("answer").value=null;
+        document.getElementById("operation").innerHTML = operation;
+        document.getElementById("answer").value = null;
         document.getElementById("answer").focus();
+      };
+      showDashboard = () => {
+        // alert("correct : " + correct + "\n" + "Incorrect : " + inCorrect);
+        localStorage.setItem("correct", correct);
+        localStorage.setItem("inCorrect", inCorrect);
+        localStorage.setItem("total", total);
+        location.href = "./result.html";
       };
     </script>
   </body>

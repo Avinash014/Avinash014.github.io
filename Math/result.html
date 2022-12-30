@@ -186,9 +186,6 @@
         </div>
 
         <div class="Promo"></div>
-        <!-- <div class="Promo"> -->
-
-        <!-- </div> -->
       </div>
     </main>
     <footer>&copy Unlimited Education</footer>
@@ -196,9 +193,9 @@
       document.getElementById("retryBtn").onclick = function () {
         location.href = "./index.html";
       };
-      let correct = sessionStorage.getItem("correct");
-      let inCorrect = sessionStorage.getItem("inCorrect");
-      let total = sessionStorage.getItem("total");
+      let correct = localStorage.getItem("correct");
+      let inCorrect = localStorage.getItem("inCorrect");
+      let total = localStorage.getItem("total");
 
       document.getElementById(
         "correct"
