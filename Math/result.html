@@ -124,7 +124,8 @@
         font-size: 1.5rem;
       }
 
-      #result {
+      #result,
+      #highScore {
         text-align: left;
         border: 1px solid black;
         margin: 1rem;
@@ -184,12 +185,39 @@
             <li id="inCorrect">Incorrect Answer(s) :</li>
           </ul>
         </div>
+        <div id="highScore">
+          <p style="text-align: center">High Scores</p>
+          <br />
+          <ul>
+            <li id="ONE_DIGIT_ADD">Single Digit Sum :</li>
+            <li id="ONE_DIGIT_SUB">Single Digit Substraction :</li>
+            <li id="ONE_DIGIT_MULTIPLY">Single Digit Multiply :</li>
+            <li id="TWO_DIGIT_ADD">Double Digit Sum :</li>
+            <li id="TWO_DIGIT_SUB">Double Digit Substraction :</li>
+            <li id="TWO_DIGIT_MULTIPLY">Double Digit Multiply :</li>
+          </ul>
+        </div>
 
         <div class="Promo"></div>
       </div>
     </main>
     <footer>&copy Unlimited Education</footer>
     <script>
+      const ONE_DIGIT_ADD = "ONE_DIGIT_ADD";
+      const ONE_DIGIT_SUB = "ONE_DIGIT_SUB";
+      const TWO_DIGIT_ADD = "TWO_DIGIT_ADD";
+      const TWO_DIGIT_SUB = "TWO_DIGIT_SUB";
+      const ONE_DIGIT_MULTIPLY = "ONE_DIGIT_MULTIPLY";
+      const TWO_DIGIT_MULTIPLY = "TWO_DIGIT_MULTIPLY";
+
+      const levelMap = new Map();
+      levelMap.set(1, ONE_DIGIT_ADD);
+      levelMap.set(2, ONE_DIGIT_SUB);
+      levelMap.set(3, ONE_DIGIT_MULTIPLY);
+      levelMap.set(4, TWO_DIGIT_ADD);
+      levelMap.set(5, TWO_DIGIT_SUB);
+      levelMap.set(6, TWO_DIGIT_MULTIPLY);
+
       document.getElementById("retryBtn").onclick = function () {
         location.href = "./index.html";
       };
@@ -206,6 +234,32 @@
       document.getElementById(
         "total"
       ).innerText = `Total Question(s) : ${total}`;
+      document.getElementById(ONE_DIGIT_ADD).innerText = `Single Digit Sum : ${
+        localStorage.getItem(ONE_DIGIT_ADD) || 0
+      }`;
+      document.getElementById(
+        ONE_DIGIT_SUB
+      ).innerText = `Single Digit Substraction : ${
+        localStorage.getItem(ONE_DIGIT_SUB) || 0
+      }`;
+      document.getElementById(
+        ONE_DIGIT_MULTIPLY
+      ).innerText = `Single Digit Multiply : ${
+        localStorage.getItem(ONE_DIGIT_MULTIPLY) || 0
+      }`;
+      document.getElementById(TWO_DIGIT_ADD).innerText = `Double Digit Sum : ${
+        localStorage.getItem(TWO_DIGIT_ADD) || 0
+      }`;
+      document.getElementById(
+        TWO_DIGIT_SUB
+      ).innerText = `Double Digit Substraction : ${
+        localStorage.getItem(TWO_DIGIT_SUB) || 0
+      }`;
+      document.getElementById(
+        TWO_DIGIT_MULTIPLY
+      ).innerText = `Double Digit Multiply : ${
+        localStorage.getItem(TWO_DIGIT_MULTIPLY) || 0
+      }`;
     </script>
   </body>
 </html>

@@ -288,7 +288,7 @@
       var minNumber = 1;
       var maxNumber = 9;
       var operation = "+";
-      const levelMap = new Map();
+
       const ONE_DIGIT_ADD = "ONE_DIGIT_ADD";
       const ONE_DIGIT_SUB = "ONE_DIGIT_SUB";
       const TWO_DIGIT_ADD = "TWO_DIGIT_ADD";
@@ -296,6 +296,7 @@
       const ONE_DIGIT_MULTIPLY = "ONE_DIGIT_MULTIPLY";
       const TWO_DIGIT_MULTIPLY = "TWO_DIGIT_MULTIPLY";
 
+      const levelMap = new Map();
       levelMap.set(1, ONE_DIGIT_ADD);
       levelMap.set(2, ONE_DIGIT_SUB);
       levelMap.set(3, ONE_DIGIT_MULTIPLY);
@@ -346,6 +347,9 @@
         gameLevel = parseInt(document.getElementById("gameLevel").value);
         console.info(`game level set is ${gameLevel}`);
         localStorage.setItem("gameLevel", gameLevel);
+        localStorage.setItem("correct", correct);
+        localStorage.setItem("inCorrect", inCorrect);
+        localStorage.setItem("total", total);
         var startingIn = 1;
         const getSet = setInterval(() => {
           document.getElementById(
@@ -476,6 +480,14 @@
         localStorage.setItem("correct", correct);
         localStorage.setItem("inCorrect", inCorrect);
         localStorage.setItem("total", total);
+        gameLevelConst = levelMap.get(gameLevel);
+        console.info(gameLevelConst);
+        levelHighScore = localStorage.getItem(gameLevelConst) || 0;
+        if (correct > levelHighScore) {
+          localStorage.setItem(gameLevelConst, correct);
+          alert("Hurray New High Score");
+        }
+        console.info(levelHighScore);
         location.href = "./result.html";
       };
     </script>
