@@ -288,31 +288,50 @@
       var minNumber = 1;
       var maxNumber = 9;
       var operation = "+";
+      const levelMap = new Map();
+      const ONE_DIGIT_ADD = "ONE_DIGIT_ADD";
+      const ONE_DIGIT_SUB = "ONE_DIGIT_SUB";
+      const TWO_DIGIT_ADD = "TWO_DIGIT_ADD";
+      const TWO_DIGIT_SUB = "TWO_DIGIT_SUB";
+      const ONE_DIGIT_MULTIPLY = "ONE_DIGIT_MULTIPLY";
+      const TWO_DIGIT_MULTIPLY = "TWO_DIGIT_MULTIPLY";
+
+      levelMap.set(1, ONE_DIGIT_ADD);
+      levelMap.set(2, ONE_DIGIT_SUB);
+      levelMap.set(3, ONE_DIGIT_MULTIPLY);
+      levelMap.set(4, TWO_DIGIT_ADD);
+      levelMap.set(5, TWO_DIGIT_SUB);
+      levelMap.set(6, TWO_DIGIT_MULTIPLY);
       // Set up the image files to be used.
       var theImages = new Array(); // do not change this
       gameLevel = parseInt(localStorage.getItem("gameLevel")) || 1;
       document.getElementById("gameLevel").value = gameLevel;
       console.info(`game Level is ${gameLevel}`);
       init = () => {
-        switch (gameLevel) {
-          case 1:
+        gameLevelCase = levelMap.get(gameLevel);
+        switch (gameLevelCase) {
+          case ONE_DIGIT_ADD:
             maxNumber = 10;
             operation = "+";
             break;
-          case 2:
+          case ONE_DIGIT_SUB:
+            maxNumber = 10;
+            operation = "-";
+            break;
+          case TWO_DIGIT_ADD:
             maxNumber = 100;
             operation = "+";
             break;
-          case 3:
-            maxNumber = 10;
-            operation = "-";
-            break;
-          case 4:
+          case TWO_DIGIT_SUB:
             maxNumber = 100;
             operation = "-";
             break;
-          case 5:
+          case ONE_DIGIT_MULTIPLY:
             maxNumber = 10;
+            operation = "X";
+            break;
+          case TWO_DIGIT_MULTIPLY:
+            maxNumber = 100;
             operation = "X";
             break;
           default:
@@ -414,17 +433,18 @@
         num2 = parseInt(document.getElementById("num2").innerHTML);
         ans = parseInt(document.getElementById("answer").value);
         var correctAnswer = 0;
-
-        switch (gameLevel) {
-          case 1:
-          case 2:
+        gameLevelCase = levelMap.get(gameLevel);
+        switch (gameLevelCase) {
+          case ONE_DIGIT_ADD:
+          case TWO_DIGIT_ADD:
             correctAnswer = num1 + num2;
             break;
-          case 3:
-          case 4:
+          case ONE_DIGIT_SUB:
+          case TWO_DIGIT_SUB:
             correctAnswer = num1 - num2;
             break;
-          case 5:
+          case ONE_DIGIT_MULTIPLY:
+          case TWO_DIGIT_MULTIPLY:
           default:
             correctAnswer = num1 * num2;
         }
