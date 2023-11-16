@@ -152,6 +152,19 @@
         width: 100px;
         height: 50px;
       }
+      .blink {
+        animation: blink 0.5s;
+      }
+      @keyframes blink {
+        0% {
+          opacity: 0;
+          transform: scale(0.5, 0.5);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1, 1);
+        }
+      }
       @media only screen and (max-width: 600px) {
         html {
           font-size: 10px;
@@ -170,10 +183,10 @@
         <div id="instruction">
           <ul>
             <li>Press L for next Picture</li>
-            <li>Press G for Answering Green</li>
-            <li>Press R for Answering Red</li>
-            <li>Press Y for Answering Yellow</li>
-            <li>Press B for Answering Blue</li>
+            <li>Press 2 for Answering Red</li>
+            <li>Press 4 for Answering Yellow</li>
+            <li>Press 8 for Answering Green</li>
+            <li>Press 0 for Answering Blue</li>
           </ul>
         </div>
         <div id="time">Time remaining : <span style="color: red">60</span></div>
@@ -185,15 +198,15 @@
       <div id="keyBtnContainer">
         <table>
           <tr>
-            <td><button id="keyR" class="keyBtn">R</button></td>
-            <td><button id="keyY" class="keyBtn">Y</button></td>
+            <td><button id="keyR" class="keyBtn">2</button></td>
+            <td><button id="keyY" class="keyBtn">4</button></td>
           </tr>
           <tr>
-            <td><button id="keyG" class="keyBtn">G</button></td>
+            <td><button id="keyG" class="keyBtn">8</button></td>
             <td rowspan="2"><button id="keyL" class="keyBtn">L</button></td>
           </tr>
           <tr>
-            <td><button id="keyB" class="keyBtn">B</button></td>
+            <td><button id="keyB" class="keyBtn">0</button></td>
           </tr>
         </table>
       </div>
@@ -209,6 +222,13 @@
       var theImages = new Array(); // do not change this
       // To add more image files, continue with the
       // pattern below, adding to the array.
+      var KEY_CODE = {
+        blue: "0",
+        green: "8",
+        yellow: "4",
+        red: "2",
+        next: "l",
+      };
 
       theImages[0] = "1.jpg";
       theImages[1] = "2.jpg";
@@ -232,26 +252,26 @@
       theImages[19] = "20.png";
       const len = theImages.length;
       var correctColor = [
-        "g",
-        "r",
-        "y",
-        "r",
-        "g",
-        "g",
-        "r",
-        "y",
-        "r",
-        "g",
-        "y",
-        "r",
-        "y",
-        "g",
-        "y",
-        "b",
-        "b",
-        "b",
-        "b",
-        "b",
+        KEY_CODE.green,
+        KEY_CODE.red,
+        KEY_CODE.yellow,
+        KEY_CODE.red,
+        KEY_CODE.green,
+        KEY_CODE.green,
+        KEY_CODE.red,
+        KEY_CODE.yellow,
+        KEY_CODE.red,
+        KEY_CODE.green,
+        KEY_CODE.yellow,
+        KEY_CODE.red,
+        KEY_CODE.yellow,
+        KEY_CODE.green,
+        KEY_CODE.yellow,
+        KEY_CODE.blue,
+        KEY_CODE.blue,
+        KEY_CODE.blue,
+        KEY_CODE.blue,
+        KEY_CODE.blue,
       ];
       screenWidth = screen.width;
       showDashboard = () => {
@@ -319,8 +339,9 @@
       const play = (ch) => {
         if (started === false) return;
         // const ch = String.fromCharCode(event.charCode || event.keyCode);
+        console.log(ch);
         ch = ch.toLowerCase();
-        if (ch === "l") {
+        if (ch === KEY_CODE.next) {
           if (newQuestion === false) {
             newQuestion = true;
             whichImage = Math.round(Math.random() * (len - 1));
@@ -344,25 +365,25 @@
         play(ch);
       });
       document.getElementById("keyR").addEventListener("click", function () {
-        play("r");
+        play(KEY_CODE.red);
       });
       document.getElementById("keyG").addEventListener("click", function () {
-        play("g");
+        play(KEY_CODE.green);
       });
       document.getElementById("keyL").addEventListener("click", function () {
-        play("l");
+        play(KEY_CODE.next);
       });
       document.getElementById("keyY").addEventListener("click", function () {
-        play("y");
+        play(KEY_CODE.yellow);
       });
       document.getElementById("keyB").addEventListener("click", function () {
-        play("b");
+        play(KEY_CODE.blue);
       });
       function showImage(whichImage) {
         document.getElementById("showObj").innerHTML =
-          '<img src="../LightPictures/' +
+          '<div class = "blink"><img src="../LightPictures/' +
           theImages[whichImage] +
-          '" alt = "hello">';
+          '" alt = "image"></div>';
       }
       const imageInsertHandler = (whichImage) => {
         // do not edit anything below this line
