@@ -94,6 +94,18 @@
         top: 0;
         left: 0;
       }
+      #keyR {
+        background-color: red;
+      }
+      #keyB {
+        background-color: blue;
+      }
+      #keyG {
+        background-color: green;
+      }
+      #keyY {
+        background-color: yellow;
+      }
       #logo {
         min-width: 40px;
         min-height: 40px;
@@ -182,7 +194,7 @@
       <div id="info">
         <div id="instruction">
           <ul>
-            <li>Press L for next Picture</li>
+            <li>Press B for next Picture</li>
             <li>Press 2 for Answering Red</li>
             <li>Press 4 for Answering Yellow</li>
             <li>Press 8 for Answering Green</li>
@@ -203,7 +215,7 @@
           </tr>
           <tr>
             <td><button id="keyG" class="keyBtn">8</button></td>
-            <td rowspan="2"><button id="keyL" class="keyBtn">L</button></td>
+            <td rowspan="2"><button id="keyL" class="keyBtn">B</button></td>
           </tr>
           <tr>
             <td><button id="keyB" class="keyBtn">0</button></td>
@@ -227,7 +239,7 @@
         green: "8",
         yellow: "4",
         red: "2",
-        next: "l",
+        next: "b",
       };
 
       theImages[0] = "1.jpg";
@@ -274,6 +286,7 @@
         KEY_CODE.blue,
       ];
       screenWidth = screen.width;
+      console.log("screen width " + screenWidth);
       showDashboard = () => {
         // alert("correct : " + correct + "\n" + "Incorrect : " + inCorrect);
         myStorage = window.sessionStorage;
