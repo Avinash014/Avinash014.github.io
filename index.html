@@ -94,16 +94,16 @@
         top: 0;
         left: 0;
       }
-      #keyR {
+      #keyRed {
         background-color: red;
       }
-      #keyB {
+      #keyBlue {
         background-color: blue;
       }
-      #keyG {
+      #keyGreen {
         background-color: green;
       }
-      #keyY {
+      #keyYellow {
         background-color: yellow;
       }
       #logo {
@@ -156,6 +156,19 @@
         align-items: center;
         justify-content: center;
       }
+      #optionSelect {
+        background-color: lightgrey;
+        min-width: 120px;
+        width: 150px;
+        height: 80%;
+        font-size: 1.5rem;
+        margin: 5px;
+        padding: 100x;
+      }
+      .hidden {
+        display: none;
+      }
+
       .keyBtn {
         width: 100%;
         height: 100%;
@@ -188,17 +201,29 @@
     <header>
       <div id="logo"><img src="./LogoColorTextBelow.jpeg" alt="logo" /></div>
       <div id="testName">DMRC/LMRC/NMRC Machine Test</div>
+      <div id="testTypeTool" class="dropdown-container">
+        <select id="optionSelect">
+          <option value="1">Test Type 1</option>
+          <option value="2">Test Type 2</option>
+        </select>
+      </div>
       <button id="startBtn">Start</button>
     </header>
     <main>
       <div id="info">
         <div id="instruction">
-          <ul>
+          <ul id="testType1" class="testType hidden">
             <li>Press B for next Picture</li>
             <li>Press 2 for Answering Red</li>
             <li>Press 4 for Answering Yellow</li>
             <li>Press 8 for Answering Green</li>
             <li>Press 0 for Answering Blue</li>
+          </ul>
+          <ul id="testType2" class="testType hidden">
+            <li>Press B for next Picture</li>
+            <li>Press R for Answering Red</li>
+            <li>Press Y for Answering Yellow</li>
+            <li>Press G for Answering Green</li>
           </ul>
         </div>
         <div id="time">Time remaining : <span style="color: red">60</span></div>
@@ -210,15 +235,15 @@
       <div id="keyBtnContainer">
         <table>
           <tr>
-            <td><button id="keyR" class="keyBtn">2</button></td>
-            <td><button id="keyY" class="keyBtn">4</button></td>
+            <td><button id="keyRed" class="keyBtn">2</button></td>
+            <td><button id="keyYellow" class="keyBtn">4</button></td>
           </tr>
           <tr>
-            <td><button id="keyG" class="keyBtn">8</button></td>
-            <td rowspan="2"><button id="keyL" class="keyBtn">B</button></td>
+            <td><button id="keyGreen" class="keyBtn">8</button></td>
+            <td rowspan="2"><button id="keyNext" class="keyBtn">B</button></td>
           </tr>
           <tr>
-            <td><button id="keyB" class="keyBtn">0</button></td>
+            <td><button id="keyBlue" class="keyBtn">0</button></td>
           </tr>
         </table>
       </div>
@@ -226,6 +251,7 @@
     <footer>&copy Unlimited Education</footer>
     <script>
       var started = false;
+      var testType = 1;
       var correct = 0;
       var inCorrect = 0;
       var newQuestion = true;
@@ -234,66 +260,24 @@
       var theImages = new Array(); // do not change this
       // To add more image files, continue with the
       // pattern below, adding to the array.
-      var KEY_CODE = {
-        blue: "0",
-        green: "8",
-        yellow: "4",
-        red: "2",
-        next: "b",
-      };
+      var KEY_CODE = {};
+      var len = 0;
+      var correctColor = [];
 
-      theImages[0] = "1.jpg";
-      theImages[1] = "2.jpg";
-      theImages[2] = "3.jpg";
-      theImages[3] = "4.jpg";
-      theImages[4] = "5.png";
-      theImages[5] = "6.jpg";
-      theImages[6] = "7.png";
-      theImages[7] = "8.jpg";
-      theImages[8] = "9.jpg";
-      theImages[9] = "10.jpg";
-      theImages[10] = "11.jpg";
-      theImages[11] = "12.jpg";
-      theImages[12] = "13.jpg";
-      theImages[13] = "14.jpg";
-      theImages[14] = "15.jpg";
-      theImages[15] = "16.png";
-      theImages[16] = "17.jfif";
-      theImages[17] = "18.jfif";
-      theImages[18] = "19.jfif";
-      theImages[19] = "20.png";
-      const len = theImages.length;
-      var correctColor = [
-        KEY_CODE.green,
-        KEY_CODE.red,
-        KEY_CODE.yellow,
-        KEY_CODE.red,
-        KEY_CODE.green,
-        KEY_CODE.green,
-        KEY_CODE.red,
-        KEY_CODE.yellow,
-        KEY_CODE.red,
-        KEY_CODE.green,
-        KEY_CODE.yellow,
-        KEY_CODE.red,
-        KEY_CODE.yellow,
-        KEY_CODE.green,
-        KEY_CODE.yellow,
-        KEY_CODE.blue,
-        KEY_CODE.blue,
-        KEY_CODE.blue,
-        KEY_CODE.blue,
-        KEY_CODE.blue,
-      ];
       screenWidth = screen.width;
       console.log("screen width " + screenWidth);
+
       showDashboard = () => {
         // alert("correct : " + correct + "\n" + "Incorrect : " + inCorrect);
-        myStorage = window.sessionStorage;
-        sessionStorage.setItem("correct", correct);
-        sessionStorage.setItem("inCorrect", inCorrect);
+        myStorage = window.localStorage;
+        localStorage.setItem("correct", correct);
+        localStorage.setItem("inCorrect", inCorrect);
         location.href = "./result.html";
       };
+      removeTestType = () => {
+        document.getElementById("testTypeTool").style.display = "none";
+      };
+
       startFunc = () => {
         started = true;
         if (screenWidth <= 600)
@@ -337,6 +321,7 @@
       };
 
       document.getElementById("startBtn").onclick = function () {
+        removeTestType();
         var startingIn = 3;
         const getSet = setInterval(() => {
           document.getElementById(
@@ -349,6 +334,7 @@
           }
         }, 1000);
       };
+
       const play = (ch) => {
         if (started === false) return;
         // const ch = String.fromCharCode(event.charCode || event.keyCode);
@@ -373,25 +359,7 @@
           }
         }
       };
-      document.addEventListener("keypress", function (event) {
-        const ch = String.fromCharCode(event.charCode || event.keyCode);
-        play(ch);
-      });
-      document.getElementById("keyR").addEventListener("click", function () {
-        play(KEY_CODE.red);
-      });
-      document.getElementById("keyG").addEventListener("click", function () {
-        play(KEY_CODE.green);
-      });
-      document.getElementById("keyL").addEventListener("click", function () {
-        play(KEY_CODE.next);
-      });
-      document.getElementById("keyY").addEventListener("click", function () {
-        play(KEY_CODE.yellow);
-      });
-      document.getElementById("keyB").addEventListener("click", function () {
-        play(KEY_CODE.blue);
-      });
+
       function showImage(whichImage) {
         document.getElementById("showObj").innerHTML =
           '<div class = "blink"><img src="../LightPictures/' +
@@ -408,6 +376,190 @@
         //   preBuffer[i].src = theImages[i];
         // }
         showImage(whichImage);
+      };
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const optionSelect = document.getElementById("optionSelect");
+        const testType1 = document.getElementById("testType1");
+        const testType2 = document.getElementById("testType2");
+        const testType = localStorage.getItem("testType");
+        if (testType) {
+          optionSelect.value = testType;
+        }
+
+        function updateDisplay() {
+          if (optionSelect.value == "1") {
+            testType1.classList.remove("hidden");
+            testType2.classList.add("hidden");
+            localStorage.setItem("testType", 1);
+            handleTestType(1);
+          } else {
+            testType1.classList.add("hidden");
+            testType2.classList.remove("hidden");
+            localStorage.setItem("testType", 2);
+            handleTestType(2);
+          }
+          localStorage.setItem("testType", optionSelect.value);
+        }
+
+        // Initial display update
+        updateDisplay();
+
+        // Event listener for dropdown change
+        optionSelect.addEventListener("change", updateDisplay);
+      });
+      handleTestType = (type) => {
+        handleKeyCode(type);
+        handleImageAndAnswer(type);
+        handleButtonPress(type);
+        handleSmallScreenButtonGroup(type);
+      };
+      handleKeyCode = (type) => {
+        if (type == 1) {
+          KEY_CODE = {
+            blue: "0",
+            green: "8",
+            yellow: "4",
+            red: "2",
+            next: "b",
+          };
+        } else {
+          KEY_CODE = {
+            blue: "b",
+            green: "g",
+            yellow: "y",
+            red: "r",
+            next: "b",
+          };
+        }
+      };
+      handleImageAndAnswer = (type) => {
+        if (type == 1) {
+          theImages = [];
+          theImages[0] = "1.jpg";
+          theImages[1] = "2.jpg";
+          theImages[2] = "3.jpg";
+          theImages[3] = "4.jpg";
+          theImages[4] = "5.png";
+          theImages[5] = "6.jpg";
+          theImages[6] = "7.png";
+          theImages[7] = "8.jpg";
+          theImages[8] = "9.jpg";
+          theImages[9] = "10.jpg";
+          theImages[10] = "11.jpg";
+          theImages[11] = "12.jpg";
+          theImages[12] = "13.jpg";
+          theImages[13] = "14.jpg";
+          theImages[14] = "15.jpg";
+          theImages[15] = "16.png";
+          theImages[16] = "17.jfif";
+          theImages[17] = "18.jfif";
+          theImages[18] = "19.jfif";
+          theImages[19] = "20.png";
+
+          len = theImages.length;
+
+          correctColor = [
+            KEY_CODE.green,
+            KEY_CODE.red,
+            KEY_CODE.yellow,
+            KEY_CODE.red,
+            KEY_CODE.green,
+            KEY_CODE.green,
+            KEY_CODE.red,
+            KEY_CODE.yellow,
+            KEY_CODE.red,
+            KEY_CODE.green,
+            KEY_CODE.yellow,
+            KEY_CODE.red,
+            KEY_CODE.yellow,
+            KEY_CODE.green,
+            KEY_CODE.yellow,
+            KEY_CODE.blue,
+            KEY_CODE.blue,
+            KEY_CODE.blue,
+            KEY_CODE.blue,
+            KEY_CODE.blue,
+          ];
+        } else {
+          theImages = [];
+          theImages[0] = "1.jpg";
+          theImages[1] = "2.jpg";
+          theImages[2] = "3.jpg";
+          theImages[3] = "4.jpg";
+          theImages[4] = "5.png";
+          theImages[5] = "6.jpg";
+          theImages[6] = "7.png";
+          theImages[7] = "8.jpg";
+          theImages[8] = "9.jpg";
+          theImages[9] = "10.jpg";
+          theImages[10] = "11.jpg";
+          theImages[11] = "12.jpg";
+          theImages[12] = "13.jpg";
+          theImages[13] = "14.jpg";
+          theImages[14] = "15.jpg";
+
+          len = theImages.length;
+
+          correctColor = [
+            KEY_CODE.green,
+            KEY_CODE.red,
+            KEY_CODE.yellow,
+            KEY_CODE.red,
+            KEY_CODE.green,
+            KEY_CODE.green,
+            KEY_CODE.red,
+            KEY_CODE.yellow,
+            KEY_CODE.red,
+            KEY_CODE.green,
+            KEY_CODE.yellow,
+            KEY_CODE.red,
+            KEY_CODE.yellow,
+            KEY_CODE.green,
+            KEY_CODE.yellow,
+          ];
+        }
+      };
+      handleButtonPress = (type) => {
+        document.addEventListener("keypress", function (event) {
+          const ch = String.fromCharCode(event.charCode || event.keyCode);
+          play(ch);
+        });
+
+        document
+          .getElementById("keyRed")
+          .addEventListener("click", function () {
+            play(KEY_CODE.red);
+          });
+        document
+          .getElementById("keyGreen")
+          .addEventListener("click", function () {
+            play(KEY_CODE.green);
+          });
+        document
+          .getElementById("keyNext")
+          .addEventListener("click", function () {
+            play(KEY_CODE.next);
+          });
+        document
+          .getElementById("keyYellow")
+          .addEventListener("click", function () {
+            play(KEY_CODE.yellow);
+          });
+        document
+          .getElementById("keyBlue")
+          .addEventListener("click", function () {
+            play(KEY_CODE.blue);
+          });
+      };
+      handleSmallScreenButtonGroup = (type) => {
+        document.getElementById("keyRed").innerHTML = KEY_CODE.red;
+        document.getElementById("keyGreen").innerHTML = KEY_CODE.green;
+        document.getElementById("keyNext").innerHTML = KEY_CODE.next;
+        document.getElementById("keyYellow").innerHTML = KEY_CODE.yellow;
+        if (type == 2) {
+          document.getElementById("keyBlue").style.display = "none";
+        }
       };
     </script>
   </body>

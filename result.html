@@ -206,8 +206,8 @@
       document.getElementById("result").onclick = function () {
         location.href = "./index.html";
       };
-      let correct = sessionStorage.getItem("correct");
-      let inCorrect = sessionStorage.getItem("inCorrect");
+      let correct = localStorage.getItem("correct");
+      let inCorrect = localStorage.getItem("inCorrect");
       document.getElementById(
         "correct"
       ).innerText = `Correct Answer(s) :${correct}`;
