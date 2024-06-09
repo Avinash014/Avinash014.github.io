@@ -557,8 +557,11 @@
         document.getElementById("keyGreen").innerHTML = KEY_CODE.green;
         document.getElementById("keyNext").innerHTML = KEY_CODE.next;
         document.getElementById("keyYellow").innerHTML = KEY_CODE.yellow;
-        if (type == 2) {
-          document.getElementById("keyBlue").style.display = "none";
+        if (type == 1) {
+          document.getElementById("keyBlue").classList.remove("hidden");
+          document.getElementById("keyBlue").innerHTML = KEY_CODE.blue;
+        } else {
+          document.getElementById("keyBlue").classList.add("hidden");
         }
       };
     </script>
