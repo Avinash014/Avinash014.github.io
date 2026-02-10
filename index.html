@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -222,6 +222,7 @@
             <li>Press R for Answering Red</li>
             <li>Press Y for Answering Yellow</li>
             <li>Press G for Answering Green</li>
+            <li>Press B for Answering Blue</li>
           </ul>
         </div>
         <div id="time">Time remaining : <span style="color: red">60</span></div>
@@ -322,9 +323,8 @@
         removeTestType();
         var startingIn = 3;
         const getSet = setInterval(() => {
-          document.getElementById(
-            "showObj"
-          ).innerText = `Starting in : ${startingIn}`;
+          document.getElementById("showObj").innerText =
+            `Starting in : ${startingIn}`;
           startingIn--;
           if (startingIn < 0) {
             startFunc();
@@ -432,91 +432,92 @@
         }
       };
       handleImageAndAnswer = (type) => {
-        if (type == 1) {
-          theImages = [];
-          theImages[0] = "1.jpg";
-          theImages[1] = "2.jpg";
-          theImages[2] = "3.jpg";
-          theImages[3] = "4.jpg";
-          theImages[4] = "5.png";
-          theImages[5] = "6.jpg";
-          theImages[6] = "7.png";
-          theImages[7] = "8.jpg";
-          theImages[8] = "9.jpg";
-          theImages[9] = "10.jpg";
-          theImages[10] = "11.jpg";
-          theImages[11] = "12.jpg";
-          theImages[12] = "13.jpg";
-          theImages[13] = "14.jpg";
-          theImages[14] = "15.jpg";
-          theImages[15] = "16.png";
-          theImages[16] = "17.jfif";
-          theImages[17] = "18.jfif";
-          theImages[18] = "19.jfif";
-          theImages[19] = "20.png";
+        // if (type == 1) {
+        // commenting as type 1 and type 2 will have same image
+        theImages = [];
+        theImages[0] = "1.jpg";
+        theImages[1] = "2.jpg";
+        theImages[2] = "3.jpg";
+        theImages[3] = "4.jpg";
+        theImages[4] = "5.png";
+        theImages[5] = "6.jpg";
+        theImages[6] = "7.png";
+        theImages[7] = "8.jpg";
+        theImages[8] = "9.jpg";
+        theImages[9] = "10.jpg";
+        theImages[10] = "11.jpg";
+        theImages[11] = "12.jpg";
+        theImages[12] = "13.jpg";
+        theImages[13] = "14.jpg";
+        theImages[14] = "15.jpg";
+        theImages[15] = "16.png";
+        theImages[16] = "17.jfif";
+        theImages[17] = "18.jfif";
+        theImages[18] = "19.jfif";
+        theImages[19] = "20.png";
 
-          len = theImages.length;
+        len = theImages.length;
 
-          correctColor = [
-            KEY_CODE.green,
-            KEY_CODE.red,
-            KEY_CODE.yellow,
-            KEY_CODE.red,
-            KEY_CODE.green,
-            KEY_CODE.green,
-            KEY_CODE.red,
-            KEY_CODE.yellow,
-            KEY_CODE.red,
-            KEY_CODE.green,
-            KEY_CODE.yellow,
-            KEY_CODE.red,
-            KEY_CODE.yellow,
-            KEY_CODE.green,
-            KEY_CODE.yellow,
-            KEY_CODE.blue,
-            KEY_CODE.blue,
-            KEY_CODE.blue,
-            KEY_CODE.blue,
-            KEY_CODE.blue,
-          ];
-        } else {
-          theImages = [];
-          theImages[0] = "1.jpg";
-          theImages[1] = "2.jpg";
-          theImages[2] = "3.jpg";
-          theImages[3] = "4.jpg";
-          theImages[4] = "5.png";
-          theImages[5] = "6.jpg";
-          theImages[6] = "7.png";
-          theImages[7] = "8.jpg";
-          theImages[8] = "9.jpg";
-          theImages[9] = "10.jpg";
-          theImages[10] = "11.jpg";
-          theImages[11] = "12.jpg";
-          theImages[12] = "13.jpg";
-          theImages[13] = "14.jpg";
-          theImages[14] = "15.jpg";
+        correctColor = [
+          KEY_CODE.green,
+          KEY_CODE.red,
+          KEY_CODE.yellow,
+          KEY_CODE.red,
+          KEY_CODE.green,
+          KEY_CODE.green,
+          KEY_CODE.red,
+          KEY_CODE.yellow,
+          KEY_CODE.red,
+          KEY_CODE.green,
+          KEY_CODE.yellow,
+          KEY_CODE.red,
+          KEY_CODE.yellow,
+          KEY_CODE.green,
+          KEY_CODE.yellow,
+          KEY_CODE.blue,
+          KEY_CODE.blue,
+          KEY_CODE.blue,
+          KEY_CODE.blue,
+          KEY_CODE.blue,
+        ];
+        // } else {
+        //   theImages = [];
+        //   theImages[0] = "1.jpg";
+        //   theImages[1] = "2.jpg";
+        //   theImages[2] = "3.jpg";
+        //   theImages[3] = "4.jpg";
+        //   theImages[4] = "5.png";
+        //   theImages[5] = "6.jpg";
+        //   theImages[6] = "7.png";
+        //   theImages[7] = "8.jpg";
+        //   theImages[8] = "9.jpg";
+        //   theImages[9] = "10.jpg";
+        //   theImages[10] = "11.jpg";
+        //   theImages[11] = "12.jpg";
+        //   theImages[12] = "13.jpg";
+        //   theImages[13] = "14.jpg";
+        //   theImages[14] = "15.jpg";
 
-          len = theImages.length;
+        //   len = theImages.length;
 
-          correctColor = [
-            KEY_CODE.green,
-            KEY_CODE.red,
-            KEY_CODE.yellow,
-            KEY_CODE.red,
-            KEY_CODE.green,
-            KEY_CODE.green,
-            KEY_CODE.red,
-            KEY_CODE.yellow,
-            KEY_CODE.red,
-            KEY_CODE.green,
-            KEY_CODE.yellow,
-            KEY_CODE.red,
-            KEY_CODE.yellow,
-            KEY_CODE.green,
-            KEY_CODE.yellow,
-          ];
-        }
+        //   correctColor = [
+        //     KEY_CODE.green,
+        //     KEY_CODE.red,
+        //     KEY_CODE.yellow,
+        //     KEY_CODE.red,
+        //     KEY_CODE.green,
+        //     KEY_CODE.green,
+        //     KEY_CODE.red,
+        //     KEY_CODE.yellow,
+        //     KEY_CODE.red,
+        //     KEY_CODE.green,
+        //     KEY_CODE.yellow,
+        //     KEY_CODE.red,
+        //     KEY_CODE.yellow,
+        //     KEY_CODE.green,
+        //     KEY_CODE.yellow,
+        //   ];
+        // }
       };
       handleButtonPress = (type) => {
         document.addEventListener("keypress", function (event) {
